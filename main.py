@@ -41,17 +41,6 @@ class Blogpost(db.Model):
     blogpost = db.TextProperty(required = True)
     created = db.DateTimeProperty(auto_now_add = True)
 
-class MainPage(Handler):
-    def render_front(self, title="", blogpost=""):
-        blogposts = db.GqlQuery("SELECT * FROM Blogpost ORDER BY created DESC")
-        self.render("front.html")
-
-    def get(self):
-        self.render_front()
-
-    def post(self):
-        self.render_front()
-
 class MakePost(Handler):
     def render_postmaker(self):
         self.render("newentry.html")
@@ -72,8 +61,25 @@ class MakePost(Handler):
             error = "Oops! Please provide a title and post content."
             self.render_postmaker(title, blogpost, error)
 
+class MainPage(Handler):
+    def render_front(self, title="", blogpost=""):
+        blogposts = db.GqlQuery("SELECT * FROM Blogpost ORDER BY created DESC")
+        self.render("front.html")
+
+    def get(self):
+        self.render_front()
+
+    def post(self):
+        title = self.request.get("title")
+        blogpost = self.request.get("blogpost")
+        self.render_front()
+
+class ViewPostHandler(webapp2.RequestHandler):
+    def get(self, id):
+        self.response.write(id)
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/newpost', MakePost),
+    webapp2.Route('/blog/<id:\d+>', ViewPostHandler)
 ], debug=True)
