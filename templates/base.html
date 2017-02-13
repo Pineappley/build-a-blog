@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>My Blog</title>
+        <style type="text/css">
+        body {
+            font-family: sans-serif;
+        }
+        .error {
+            color: red
+        }
+        .redirects {
+            font-size: 13px;
+        }
+        label {
+            display: block;
+            font-size: 16px;
+        }
+        input[type=text] {
+            width: 400px;
+            font-size: 16px;
+            padding: 2px
+        }
+        textarea {
+            width: 400px;
+            height: 200px;
+            font-size: 13px;
+            font-family: monospace;
+        }
+        input[type = submit] {
+            font-size: 13px;
+         {
+
+        }
+        }
+        .blogpost + .blogpost {
+            margin.top: 20px;
+        }
+        .blogpost-title {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .blogpost-body {
+            font-size: 13px;
+        }
+        </style>
+    </head>
+    <body>
+        <h1>
+            My Blog
+        </h1>
+        <div class = "redirects">
+        <a href="/">My Blog</a>
+        <a href="/newpost">Make a New Post</a>
+        </div>
+
+        {% block content %}
+        {% endblock %}
+
+    </body>
+</html>
