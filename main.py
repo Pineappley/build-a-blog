@@ -35,7 +35,6 @@ class Handler(webapp2.RequestHandler):
     def render (self, template, **kw):
         self.write(self.render_str(template, **kw))
 
-
 class Blogpost(db.Model):
     title = db.StringProperty(required = True)
     blogpost = db.TextProperty(required = True)
@@ -64,7 +63,7 @@ class MakePost(Handler):
 class MainPage(Handler):
     def render_front(self, title="", blogpost=""):
         blogposts = db.GqlQuery("SELECT * FROM Blogpost ORDER BY created DESC")
-        self.render("front.html")
+        self.render("front.html", title=title, blogpost = blogpost, blogposts = blogposts)
 
     def get(self):
         self.render_front()
@@ -76,7 +75,8 @@ class MainPage(Handler):
 
 class ViewPostHandler(webapp2.RequestHandler):
     def get(self, id):
-        self.response.write(id)
+        post.get_by_id
+        #self.response.write(id)
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
