@@ -41,8 +41,8 @@ class Blogpost(db.Model):
     created = db.DateTimeProperty(auto_now_add = True)
 
 class MakePost(Handler):
-    def render_postmaker(self):
-        self.render("newentry.html")
+    def render_postmaker(self, title="", blogpost="", error=""):
+        self.render("newentry.html", title=title, blogpost=blogpost, error=error)
 
     def get(self):
         self.render_postmaker()
@@ -66,13 +66,14 @@ class MainPage(Handler):
         self.render("front.html", blogposts = blogposts)
 
     def get(self):
+        # postlink = Blogpost.key(Blogpost.blogpost).id()
+        # postlink = int(postlink)
         self.render_front()
 
     def post(self):
         title = self.request.get("title")
         blogpost = self.request.get("blogpost")
         postlink = self.request.get("postlink")
-
         self.render_front()
 
 class ViewPostHandler(Handler):
