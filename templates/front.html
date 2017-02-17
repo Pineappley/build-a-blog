@@ -5,7 +5,7 @@
     {% for blogpost in blogposts %}
     <hr>
     <div class="blogpost">
-    <div class="blogpost-title"><a href="/blog/" + id:\d+>{{blogpost.title}}</a></div>
+    <div class="blogpost-title"><a href="/blog/" + postlink>{{blogpost.title}}</a></div>
     <pre class="blogpost-body">{{blogpost.blogpost}}</pre>
     </div>
     {% endfor %}

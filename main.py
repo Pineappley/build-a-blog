@@ -54,8 +54,8 @@ class MakePost(Handler):
         if title and blogpost:
             a = Blogpost(title = title, blogpost = blogpost)
             a.put()
-
-            self.redirect("/")
+            postlink = str(Blogpost.key(a).id())
+            self.redirect("/blog/" + postlink)
         else:
             error = "Oops! Please provide a title and post content."
             self.render_postmaker(title, blogpost, error)
@@ -71,6 +71,8 @@ class MainPage(Handler):
     def post(self):
         title = self.request.get("title")
         blogpost = self.request.get("blogpost")
+        postlink = self.request.get("postlink")
+
         self.render_front()
 
 class ViewPostHandler(Handler):
@@ -80,18 +82,8 @@ class ViewPostHandler(Handler):
         single_post = Blogpost.get_by_id(id)
         self.render("permapage.html", post = single_post)
 
-    #def render_singlepost(self, single_post):
-
-
     def post(self):
         self.render_singlepost()
-        #  def render_singlepost():
-    #     self.render("permapage.html", blogpost = blogpost)
-    #
-    # def post(self):
-    #     blogposts = db.GqlQuery("SELECT * FROM Blogpost")
-    #     for blogpost:
-    #         self.render_singlepost()
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
