@@ -63,7 +63,7 @@ class MakePost(Handler):
 class MainPage(Handler):
     def render_front(self, title="", blogpost=""):
         blogposts = db.GqlQuery("SELECT * FROM Blogpost ORDER BY created DESC")
-        self.render("front.html", title=title, blogpost = blogpost, blogposts = blogposts)
+        self.render("front.html", blogposts = blogposts)
 
     def get(self):
         self.render_front()
@@ -73,13 +73,28 @@ class MainPage(Handler):
         blogpost = self.request.get("blogpost")
         self.render_front()
 
-class ViewPostHandler(webapp2.RequestHandler):
+class ViewPostHandler(Handler):
+
     def get(self, id):
-        post.get_by_id
-        #self.response.write(id)
+        id = int(id)
+        single_post = Blogpost.get_by_id(id)
+        self.render("permapage.html", post = single_post)
+
+    #def render_singlepost(self, single_post):
+
+
+    def post(self):
+        self.render_singlepost()
+        #  def render_singlepost():
+    #     self.render("permapage.html", blogpost = blogpost)
+    #
+    # def post(self):
+    #     blogposts = db.GqlQuery("SELECT * FROM Blogpost")
+    #     for blogpost:
+    #         self.render_singlepost()
 
 app = webapp2.WSGIApplication([
     ('/', MainPage),
     ('/newpost', MakePost),
-    webapp2.Route('/blog/<id:\d+>', ViewPostHandler)
+    webapp2.Route('/blog/<id:\d+>', ViewPostHandler),
 ], debug=True)
